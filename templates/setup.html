@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome · TableTap</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/css/base.css?v={{ v }}">
+<link rel="stylesheet" href="/static/css/auth.css?v={{ v }}">
+</head>
+<body class="auth">
+<main class="auth-wrap">
+  <section class="auth-art" aria-hidden="true">
+    <div class="art-brand"><span class="logo-mark"></span> TableTap</div>
+    <div class="art-copy">
+      <h2>Let's open your digital restaurant.</h2>
+      <p>Two minutes of setup. Then print your table QR codes and start taking orders tonight.</p>
+    </div>
+    <ol class="art-steps">
+      <li><b>1</b> Create your account</li>
+      <li><b>2</b> Build or import your menu</li>
+      <li><b>3</b> Print QR codes for your tables</li>
+      <li><b>4</b> Open the kitchen screen — done</li>
+    </ol>
+  </section>
+  <section class="auth-panel">
+    <form id="setup-form" class="auth-card" novalidate>
+      <div class="auth-brand"><span class="logo-mark"></span> TableTap</div>
+      <h1>Welcome 👋</h1>
+      <p class="muted">Create the owner account for this TableTap installation.</p>
+      <div class="stack" style="margin-top:22px">
+        <div class="field"><label for="restaurant">Restaurant name</label>
+          <input class="input" id="restaurant" name="restaurant" maxlength="80" placeholder="e.g. Café Luna" required autofocus></div>
+        <div class="grid-2">
+          <div class="field"><label for="currency">Currency</label>
+            <select class="select" id="currency" name="currency">
+              {% for c in currencies %}<option value="{{ c.code }}">{{ c.code }} — {{ c.name }}</option>{% endfor %}
+            </select></div>
+          <div class="field"><label for="language">Guest menu language</label>
+            <select class="select" id="language" name="language">
+              <option value="en">English</option><option value="fr">Français</option>
+              <option value="es">Español</option><option value="ar">العربية</option>
+            </select></div>
+        </div>
+        <div class="field"><label for="name">Your name</label>
+          <input class="input" id="name" name="name" maxlength="80" autocomplete="name"></div>
+        <div class="field"><label for="email">Email</label>
+          <input class="input" id="email" name="email" type="email" autocomplete="username" required></div>
+        <div class="field"><label for="password">Password</label>
+          <input class="input" id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+          <span class="hint">At least 8 characters.</span></div>
+        <label class="switch"><input type="checkbox" name="demo" checked><span class="track"></span>
+          <span>Start with a demo menu &amp; 12 tables <span class="faint">(edit or delete anytime)</span></span></label>
+        <div id="form-error" class="field-error" hidden></div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Create my restaurant</button>
+      </div>
+    </form>
+  </section>
+</main>
+<script id="boot" type="application/json">{"csrf": "{{ csrf }}", "mode": "setup"}</script>
+<script src="/static/js/core.js?v={{ v }}"></script>
+<script src="/static/js/auth.js?v={{ v }}"></script>
+</body>
+</html>

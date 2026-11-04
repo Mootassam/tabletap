@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="{{ lang }}" dir="{{ 'rtl' if lang == 'ar' else 'ltr' }}">
+<head>
+<meta charset="utf-8">
+<title>QR codes · {{ rest.name }}</title>
+<link rel="stylesheet" href="/static/css/base.css?v={{ v }}">
+<style>
+  :root { --accent: {{ accent }}; color-scheme: light; }
+  body { background: #e9e7e4; color: #1c1b19; }
+  .bar { position: sticky; top: 0; z-index: 5; display: flex; gap: 10px; align-items: center; padding: 12px 20px; background: #fff; border-bottom: 1px solid #ddd; }
+  .bar b { font-size: 15px; }
+  .page { width: 210mm; height: 297mm; margin: 18px auto; background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,.12); display: grid; padding: 10mm; gap: 6mm; box-sizing: border-box; page-break-after: always; overflow: hidden; }
+  .page.card { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 1fr); }
+  .page.sticker { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); }
+  .page.tent { grid-template-rows: 1fr 1fr; padding: 0; gap: 0; }
+  .c { border: 1px dashed #c9c5bf; border-radius: 6mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8mm 5mm 4mm; position: relative; overflow: hidden; min-height: 0; }
+  .c .top { position: absolute; top: 0; left: 0; right: 0; height: 5mm; background: var(--accent); }
+  .c .brand { display: flex; align-items: center; gap: 2.5mm; font-weight: 800; font-size: 4.6mm; line-height: 1.1; }
+  .c .brand img { width: 8mm; height: 8mm; border-radius: 2.5mm; object-fit: cover; }
+  .c .qr { width: 40mm; height: 40mm; margin: 3mm 0 2mm; flex: none; }
+  .c .qr svg { width: 100%; height: 100%; }
+  .c .head { font-size: 4mm; font-weight: 700; color: #5f5b55; max-width: 70mm; }
+  .c .label { margin-top: 2.5mm; font-size: 6.5mm; font-weight: 900; letter-spacing: -.02em; padding: 0.5mm 5mm; border-radius: 3mm; background: #1c1b19; color: #fff; line-height: 1.3; }
+  .c .wifi { margin-top: 2mm; font-size: 3mm; color: #8f8a83; }
+  .sticker .c { border-radius: 4mm; }
+  .sticker .c .top { height: 5mm; }
+  .sticker .c { padding: 6mm 3mm 3mm; }
+  .sticker .c .brand { font-size: 3.2mm; }
+  .sticker .c .brand img { display: none; }
+  .sticker .c .qr { width: 34mm; height: 34mm; margin: 2mm 0 1mm; }
+  .sticker .c .head, .sticker .c .wifi { display: none; }
+  .sticker .c .label { font-size: 4.5mm; margin-top: 1mm; }
+  .tent .c { border: 0; border-radius: 0; border-bottom: 1px dashed #c9c5bf; padding: 16mm 12mm 10mm; }
+  .tent .c.flip { transform: rotate(180deg); border-bottom: 0; border-top: 1px dashed #c9c5bf; }
+  .tent .c .qr { width: 70mm; height: 70mm; }
+  .tent .c .brand { font-size: 7mm; }
+  .tent .c .brand img { width: 13mm; height: 13mm; }
+  .tent .c .head { font-size: 5.5mm; max-width: 140mm; }
+  .tent .c .label { font-size: 11mm; }
+  .tent .c .top { height: 12mm; }
+  @media print {
+    @page { size: A4; margin: 0; }
+    body { background: #fff; }
+    .bar { display: none; }
+    .page { margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <b>{{ cards|length }} QR code{{ 's' if cards|length != 1 }} · {{ {'card':'Table cards','tent':'Tent cards','sticker':'Stickers'}[style] }}</b>
+  <span class="spacer"></span>
+  <span class="muted small">Tip: in the print dialog choose A4, scale 100%, margins “None”.</span>
+  <button class="btn btn-primary" id="print-btn" type="button">Print</button>
+</div>
+{% set heading_default = {'en':'Scan to see the menu & order','fr':'Scannez pour voir le menu et commander','es':'Escanea para ver el menú y pedir','ar':'امسح لرؤية القائمة والطلب'}[lang] or 'Scan to see the menu & order' %}
+{% set per = 1 if style == 'tent' else per_page %}
+{% for chunk in cards|batch(per) %}
+<div class="page {{ style }}">
+  {% for c in chunk %}
+    {% for flip in ([true, false] if style == 'tent' else [false]) %}
+    <div class="c{{ ' flip' if flip }}">
+      <div class="top"></div>
+      <div class="brand">{% if rest.logo %}<img src="/u/{{ rest.logo }}" alt="">{% endif %}{{ rest.name }}</div>
+      <div class="qr">{{ c.svg|safe }}</div>
+      <div class="head">{{ heading or heading_default }}</div>
+      <div class="label">{{ c.label }}</div>
+      {% if rest.wifi_name and style != 'sticker' %}<div class="wifi">Wi-Fi: {{ rest.wifi_name }}{% if rest.wifi_password %} · {{ rest.wifi_password }}{% endif %}</div>{% endif %}
+    </div>
+    {% endfor %}
+  {% endfor %}
+</div>
+{% endfor %}
+{% if not cards %}<p style="text-align:center;padding:60px">No active tables to print.</p>{% endif %}
+<script src="/static/js/print.js?v={{ v }}"></script>
+</body>
+</html>

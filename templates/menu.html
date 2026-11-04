@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="{{ lang }}" dir="{{ 'rtl' if rtl else 'ltr' }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="{{ accent }}">
+<meta name="robots" content="noindex">
+<title>{{ title }}</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/css/base.css?v={{ v }}">
+<link rel="stylesheet" href="/static/css/menu.css?v={{ v }}">
+<style>:root { --accent: {{ accent }}; }</style>
+</head>
+<body class="menu-page">
+<div id="app"><div class="boot-loader"><div class="spinner"></div></div></div>
+<script id="boot" type="application/json">{{ boot|safe }}</script>
+<script src="/static/js/core.js?v={{ v }}"></script>
+<script src="/static/js/menu.js?v={{ v }}"></script>
+</body>
+</html>

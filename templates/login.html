@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · TableTap</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/css/base.css?v={{ v }}">
+<link rel="stylesheet" href="/static/css/auth.css?v={{ v }}">
+</head>
+<body class="auth">
+<main class="auth-wrap">
+  <section class="auth-art" aria-hidden="true">
+    <div class="art-brand"><span class="logo-mark"></span> TableTap</div>
+    <div class="art-copy">
+      <h2>Your menu, on every table.</h2>
+      <p>Guests scan, order and pay attention to each other — not the waiter. Your kitchen sees every order the second it's placed.</p>
+    </div>
+    <div class="art-phone">
+      <div class="ap-row"><span class="ap-emoji">🍔</span><div><b>Classic Smash Burger</b><small>Medium · Bacon</small></div><span>×2</span></div>
+      <div class="ap-row"><span class="ap-emoji">🍋</span><div><b>Mint Lemonade</b><small>Large</small></div><span>×2</span></div>
+      <div class="ap-status"><span class="ap-dot"></span> Order #14 · Preparing</div>
+    </div>
+  </section>
+  <section class="auth-panel">
+    <form id="login-form" class="auth-card" novalidate>
+      <div class="auth-brand"><span class="logo-mark"></span> TableTap</div>
+      <h1>Welcome back</h1>
+      <p class="muted">Sign in to manage your restaurant.</p>
+      <div class="stack" style="margin-top:22px">
+        <div class="field"><label for="email">Email</label>
+          <input class="input" id="email" name="email" type="email" autocomplete="username" required autofocus></div>
+        <div class="field"><label for="password">Password</label>
+          <input class="input" id="password" name="password" type="password" autocomplete="current-password" required></div>
+        <div id="form-error" class="field-error" hidden></div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Sign in</button>
+      </div>
+      <p class="hint" style="margin-top:18px">Forgot your password? Ask the restaurant manager to reset it from <b>Staff</b>.</p>
+    </form>
+  </section>
+</main>
+<script id="boot" type="application/json">{"csrf": "{{ csrf }}", "mode": "login"}</script>
+<script src="/static/js/core.js?v={{ v }}"></script>
+<script src="/static/js/auth.js?v={{ v }}"></script>
+</body>
+</html>

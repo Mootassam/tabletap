@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{% if o %}#{{ o.number }}{% else %}{{ table.label }}{% endif %} · {{ rest.name }}</title>
+<link rel="stylesheet" href="/static/css/base.css?v={{ v }}">
+<style>
+  :root { color-scheme: light; }
+  body { background: #e9e7e4; color: #111; }
+  .bar { display: flex; gap: 10px; padding: 12px; justify-content: center; }
+  .slip { width: 80mm; margin: 0 auto 30px; background: #fff; padding: 6mm 5mm; font: 13px/1.4 var(--mono); box-shadow: 0 6px 24px rgba(0,0,0,.12); }
+  .center { text-align: center; }
+  .big { font-size: 30px; font-weight: 900; font-family: var(--font); }
+  .tbl { font-size: 20px; font-weight: 900; font-family: var(--font); }
+  .rest { font-size: 17px; font-weight: 800; font-family: var(--font); }
+  hr { border: 0; border-top: 1px dashed #000; margin: 8px 0; }
+  .line { display: flex; gap: 6px; margin: 5px 0; }
+  .line .q { font-weight: 900; min-width: 26px; }
+  .line .n { flex: 1; }
+  .line .p { white-space: nowrap; }
+  .opt { font-size: 12px; padding-left: 32px; }
+  .note { font-weight: 900; background: #000; color: #fff; padding: 2px 5px; display: inline-block; margin: 2px 0 2px 32px; font-size: 12px; }
+  .onote { border: 2px solid #000; padding: 5px; font-weight: 800; margin-top: 6px; }
+  .t { display: flex; justify-content: space-between; }
+  .t.g { font-size: 17px; font-weight: 900; margin-top: 4px; }
+  .ticket .line { font-size: 16px; font-family: var(--font); }
+  .ticket .line .q { font-size: 18px; }
+  .ticket .opt { font-size: 14px; font-family: var(--font); }
+  .sub { font-size: 11px; color: #444; }
+  @media print { @page { size: 80mm auto; margin: 0; } body { background: #fff; } .bar { display: none; } .slip { box-shadow: none; margin: 0; width: 100%; } }
+</style>
+</head>
+<body>
+<div class="bar"><button class="btn btn-primary" id="print-btn" type="button">Print</button></div>
+{% macro money(minor) -%}
+  {%- set val = '%.*f'|format(rest.decimals, minor / (10 ** rest.decimals)) -%}
+  {%- if rest.currency_suffix %}{{ val }} {{ rest.currency_symbol }}{% else %}{{ rest.currency_symbol }}{{ val }}{% endif -%}
+{%- endmacro %}
+{% macro lines(order, prices) %}
+  {% for l in order['items'] %}
+    <div class="line"><span class="q">{{ l.qty }}×</span><span class="n">{{ l.name }}</span>{% if prices %}<span class="p">{{ money(l.line_total) }}</span>{% endif %}</div>
+    {% for op in l.options %}<div class="opt">+ {{ op.choice }}{% if prices and op.price %} ({{ money(op.price) }}){% endif %}</div>{% endfor %}
+    {% if l.note %}<div class="note">! {{ l.note }}</div>{% endif %}
+  {% endfor %}
+{% endmacro %}
+
+{% if kind == 'ticket' %}
+<div class="slip ticket">
+  <div class="center big">#{{ o.number }}</div>
+  <div class="center tbl">{{ o.table_label or '—' }}</div>
+  <div class="center sub">{{ created.strftime('%H:%M · %d %b') }}{% if o.customer_name %} · {{ o.customer_name }}{% endif %}</div>
+  <hr>
+  {{ lines(o, false) }}
+  {% if o.note %}<div class="onote">NOTE: {{ o.note }}</div>{% endif %}
+  <hr>
+  <div class="center sub">{{ o.item_count }} item(s)</div>
+</div>
+{% else %}
+<div class="slip">
+  <div class="center rest">{{ rest.name }}</div>
+  {% if rest.address %}<div class="center sub">{{ rest.address }}</div>{% endif %}
+  {% if rest.phone %}<div class="center sub">{{ rest.phone }}</div>{% endif %}
+  <hr>
+  {% if kind == 'bill' %}
+    <div class="t"><span>Order #{{ o.number }}</span><span>{{ o.table_label }}</span></div>
+    <div class="sub">{{ created.strftime('%d %b %Y · %H:%M') }}</div>
+    <hr>
+    {{ lines(o, true) }}
+    {% set t = o %}
+  {% else %}
+    <div class="t"><span>{{ table.label }}</span><span>{{ orders|length }} order(s)</span></div>
+    <div class="sub">{{ created.strftime('%d %b %Y · %H:%M') }}</div>
+    {% for od in orders %}<hr><div class="sub">Order #{{ od.number }}</div>{{ lines(od, true) }}{% endfor %}
+    {% if not orders %}<p class="center">No unpaid orders.</p>{% endif %}
+    {% set t = totals %}
+  {% endif %}
+  <hr>
+  <div class="t"><span>Subtotal</span><span>{{ money(t.subtotal) }}</span></div>
+  {% if t.service %}<div class="t"><span>Service</span><span>{{ money(t.service) }}</span></div>{% endif %}
+  {% if t.tax and not rest.tax_inclusive %}<div class="t"><span>Tax</span><span>{{ money(t.tax) }}</span></div>{% endif %}
+  <div class="t g"><span>TOTAL</span><span>{{ money(t.total) }}</span></div>
+  {% if t.tax and rest.tax_inclusive %}<div class="t sub"><span>incl. tax {{ '%g'|format(rest.tax_rate / 100) }}%</span><span>{{ money(t.tax) }}</span></div>{% endif %}
+  {% if kind == 'bill' and o.paid %}<hr><div class="center"><b>PAID · {{ o.payment_method|upper }}</b></div>{% endif %}
+  <hr>
+  <div class="center sub">Thank you — see you soon!</div>
+</div>
+{% endif %}
+<script src="/static/js/print.js?v={{ v }}"></script>
+</body>
+</html>

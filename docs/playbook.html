@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TableTap — Product & Business Playbook</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 18mm; }
+  :root { --accent: #e4572e; --ink: #1c1b19; --muted: #5f5b55; --faint: #8f8a83; --line: #e6e2dd; --soft: #f6f5f3; --ok: #1f9d55; --warn: #c77700; --info: #2f6fdb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 9.5pt/1.47 "Segoe UI", "Inter", system-ui, sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1, h2, h3, h4 { line-height: 1.2; margin: 0; letter-spacing: -.01em; }
+  h1 { font-size: 26pt; font-weight: 800; }
+  h2 { font-size: 19pt; font-weight: 800; margin-bottom: 4mm; }
+  h3 { font-size: 12pt; font-weight: 800; margin: 4.5mm 0 1.8mm; break-after: avoid; }
+  h4 { font-size: 10.5pt; font-weight: 800; margin: 4mm 0 1.5mm; }
+  p { margin: 0 0 2.2mm; }
+  ul, ol { margin: 0 0 3mm; padding-left: 5.5mm; }
+  li { margin: 0 0 .8mm; }
+  b, strong { font-weight: 700; }
+  .page-break { break-before: page; }
+  .avoid { break-inside: avoid; }
+  .kicker { font-size: 8.5pt; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 2mm; }
+  .lead { font-size: 11.5pt; color: var(--muted); margin-bottom: 5mm; }
+  .muted { color: var(--muted); }
+  .small { font-size: 8.8pt; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* cover */
+  .cover { height: 263mm; position: relative; border-radius: 6mm; overflow: hidden; color: #fff; padding: 18mm 16mm;
+    background: radial-gradient(circle at 15% 12%, rgba(255,255,255,.2), transparent 40%), radial-gradient(circle at 90% 88%, rgba(0,0,0,.3), transparent 55%), linear-gradient(150deg, #e4572e, #b8341a 55%, #6e1a0c); }
+  .cover .brand { display: flex; align-items: center; gap: 3mm; font-weight: 800; font-size: 15pt; }
+  .logo { width: 10mm; height: 10mm; border-radius: 3mm; background: rgba(255,255,255,.2); display: grid; grid-template-columns: 1fr 1fr; gap: 1.2mm; padding: 2mm; }
+  .logo i { background: #fff; border-radius: .7mm; }
+  .logo i:last-child { border-radius: 50%; }
+  .cover h1 { font-size: 40pt; line-height: 1.05; margin-top: 55mm; letter-spacing: -.03em; }
+  .cover .sub { font-size: 14pt; opacity: .9; margin-top: 6mm; max-width: 140mm; }
+  .cover .chips { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 10mm; }
+  .cover .chips span { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3); padding: 1.5mm 4mm; border-radius: 99px; font-weight: 700; font-size: 9.5pt; }
+  .cover .foot { position: absolute; left: 16mm; right: 16mm; bottom: 14mm; display: flex; justify-content: space-between; font-size: 9pt; opacity: .85; }
+  .cover .phone { position: absolute; right: 16mm; top: 30mm; width: 58mm; border-radius: 7mm; overflow: hidden; border: 2mm solid #1c1b19; box-shadow: 0 10mm 20mm rgba(0,0,0,.35); transform: rotate(4deg); background: #fff; }
+  .cover .phone img { width: 100%; display: block; }
+
+  /* toc */
+  .toc { columns: 2; column-gap: 10mm; margin-top: 4mm; }
+  .toc div { display: flex; gap: 3mm; padding: 2mm 0; border-bottom: 1px solid var(--line); break-inside: avoid; font-weight: 600; }
+  .toc span { color: var(--accent); font-weight: 800; min-width: 7mm; }
+
+  /* blocks */
+  .card { border: 1px solid var(--line); border-radius: 4mm; padding: 4.5mm 5mm; background: #fff; }
+  .soft { background: var(--soft); border: 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; }
+  .callout { border-left: 1.2mm solid var(--accent); background: #fdf0eb; padding: 3.5mm 5mm; border-radius: 0 3mm 3mm 0; margin: 4mm 0; }
+  .callout.ok { border-color: var(--ok); background: #e9f7ef; }
+  .callout.warn { border-color: var(--warn); background: #fff4df; }
+  .callout.info { border-color: var(--info); background: #e8effc; }
+  .callout b:first-child { display: block; margin-bottom: 1mm; }
+  .stat { text-align: center; padding: 4mm 2mm; }
+  .stat .v { font-size: 20pt; font-weight: 800; color: var(--accent); line-height: 1.1; }
+  .stat .l { font-size: 8.5pt; color: var(--muted); font-weight: 600; margin-top: 1mm; }
+  .badge { display: inline-block; font-size: 7.8pt; font-weight: 800; padding: .5mm 2.5mm; border-radius: 99px; background: #fdebe5; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; }
+  .badge.ok { background: #e3f5ea; color: var(--ok); }
+  .badge.info { background: #e4edfc; color: var(--info); }
+
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 9.3pt; }
+  th { text-align: left; font-size: 8pt; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 2mm 2.5mm; border-bottom: 1.5px solid var(--ink); }
+  td { padding: 1.7mm 2.5mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr { break-inside: avoid; }
+  td.r, th.r { text-align: right; }
+  tr.total td { font-weight: 800; border-top: 1.5px solid var(--ink); }
+
+  /* steps */
+  .steps { counter-reset: s; }
+  .step { display: grid; grid-template-columns: 9mm 1fr; gap: 3.5mm; margin-bottom: 2.4mm; break-inside: avoid; }
+  .step::before { counter-increment: s; content: counter(s); width: 8mm; height: 8mm; border-radius: 2.5mm; background: var(--ink); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 10pt; }
+  .step h4 { margin-top: .8mm; }
+
+  /* flow */
+  .flow { display: flex; align-items: stretch; gap: 2mm; margin: 4mm 0; }
+  .flow .n { flex: 1; border: 1px solid var(--line); border-radius: 3mm; padding: 3mm; text-align: center; font-size: 8.8pt; background: #fff; }
+  .flow .n b { display: block; font-size: 9.5pt; margin: 1mm 0; }
+  .flow .n .e { font-size: 15pt; }
+  .flow .a { align-self: center; color: var(--accent); font-weight: 900; font-size: 13pt; }
+
+  /* screenshots */
+  .shots { display: grid; gap: 4mm; align-items: start; }
+  .shots.p3 { grid-template-columns: repeat(3, 1fr); }
+  .shots.p4 { grid-template-columns: repeat(4, 1fr); }
+  .shots.p3 figure.phone img { max-height: 48mm; }
+  .shots.p3 { width: 80%; margin: 0 auto; }
+  figure { margin: 0; break-inside: avoid; }
+  figure img { width: 100%; display: block; border-radius: 3mm; border: 1px solid var(--line); box-shadow: 0 2mm 5mm rgba(0,0,0,.08); }
+  figure.phone img { border-radius: 4mm; border: 1.2mm solid #1c1b19; max-height: 98mm; object-fit: cover; object-position: top; }
+  figcaption { font-size: 8.3pt; color: var(--muted); margin-top: 1.8mm; text-align: center; font-weight: 600; }
+  .wide-shot img { max-height: 80mm; object-fit: cover; object-position: top; }
+
+  /* pricing */
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin: 4mm 0; }
+  .plan { border: 1px solid var(--line); border-radius: 4mm; padding: 5mm; position: relative; break-inside: avoid; }
+  .plan.hot { border: 2px solid var(--accent); box-shadow: 0 3mm 8mm rgba(228,87,46,.15); }
+  .plan .tag { position: absolute; top: -3mm; left: 5mm; background: var(--accent); color: #fff; font-size: 7.5pt; font-weight: 800; padding: .8mm 3mm; border-radius: 99px; letter-spacing: .05em; }
+  .plan h4 { margin: 0; font-size: 12pt; }
+  .plan .price { font-size: 22pt; font-weight: 800; margin: 2mm 0 0; }
+  .plan .price small { font-size: 9pt; color: var(--muted); font-weight: 600; }
+  .plan .alt { font-size: 8.5pt; color: var(--muted); margin-bottom: 3mm; }
+  .plan ul { padding-left: 4.5mm; font-size: 9pt; }
+
+  .script { background: #1c1b19; color: #f3f1ee; border-radius: 3.5mm; padding: 3.8mm 5mm; font-size: 9pt; line-height: 1.5; break-inside: avoid; margin: 2mm 0 4mm; }
+  .script .h { color: #ff9b7a; font-weight: 800; font-size: 8pt; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 2mm; }
+  .script em { color: #fcd34d; font-style: normal; }
+
+  .week { display: grid; grid-template-columns: 26mm 1fr; gap: 4mm; padding: 2.2mm 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
+  .week .w { font-weight: 800; color: var(--accent); }
+  .check li { list-style: none; position: relative; padding-left: 1mm; }
+  .check li::before { content: "☐"; position: absolute; left: -5mm; color: var(--accent); font-weight: 800; }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 2px solid var(--ink); padding-bottom: 2.5mm; margin-bottom: 4mm; break-after: avoid; }
+  .sec-head .no { font-size: 34pt; font-weight: 900; color: #f0d6cc; line-height: .9; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ COVER -->
+<section class="cover">
+  <div class="brand"><div class="logo"><i></i><i></i><i></i><i></i></div> TableTap</div>
+  <div class="phone"><img src="img/07-guest-menu.png" alt=""></div>
+  <h1>Product &amp;<br>Business<br>Playbook</h1>
+  <div class="sub">How TableTap works, how to launch it, how to price it, how to sell it and how to advertise it — step by step, to reach your first 100 paying restaurants.</div>
+  <div class="chips"><span>QR menu</span><span>Table ordering</span><span>Kitchen display</span><span>Monthly subscription</span></div>
+  <div class="foot"><span>Version 1.0 · September 2026</span><span>Confidential — internal use</span></div>
+</section>
+
+<!-- ============================================================ TOC -->
+<section class="page-break">
+  <div class="kicker">Contents</div>
+  <h2>What's inside</h2>
+  <div class="toc">
+    <div><span>1</span>The opportunity in one page</div>
+    <div><span>2</span>What TableTap is &amp; how it works</div>
+    <div><span>3</span>The guest experience</div>
+    <div><span>4</span>Kitchen, staff &amp; owner tools</div>
+    <div><span>5</span>Your platform (the business engine)</div>
+    <div><span>6</span>Going live: hosting &amp; setup</div>
+    <div><span>7</span>Who to sell to</div>
+    <div><span>8</span>Why owners buy: value &amp; ROI</div>
+    <div><span>9</span>Pricing &amp; plans</div>
+    <div><span>10</span>Money math: costs, profit, goals</div>
+    <div><span>11</span>Sales system (the pipeline)</div>
+    <div><span>12</span>Scripts: email, WhatsApp, walk-in, phone</div>
+    <div><span>13</span>Handling objections</div>
+    <div><span>14</span>Advertising strategy</div>
+    <div><span>15</span>Social media &amp; content plan</div>
+    <div><span>16</span>Onboarding a new restaurant</div>
+    <div><span>17</span>Keeping clients (retention)</div>
+    <div><span>18</span>90-day launch plan</div>
+    <div><span>19</span>Numbers to track every week</div>
+    <div><span>20</span>Legal &amp; professional basics</div>
+    <div><span>21</span>12-month roadmap &amp; upsells</div>
+    <div><span>22</span>Checklists</div>
+  </div>
+  <div class="callout info" style="margin-top:10mm">
+    <b>How to use this playbook</b>
+    Sections 2–6 explain the product so you can demo it with confidence. Sections 7–19 are the money part:
+    who to target, what to charge, exactly what to say and where to spend on ads. Section 22 has printable checklists.
+    All prices and projections are <b>examples to adapt</b> to your city and currency — test, measure, adjust.
+  </div>
+</section>
+
+<!-- ============================================================ 1 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 1</div><h2>The opportunity in one page</h2></div><div class="no">01</div></div>
+  <p class="lead">Every restaurant, café, hotel and beach bar has the same problems: guests wait to order, waiters are overloaded, printed menus are expensive to change, and orders get lost between the table and the kitchen. TableTap fixes all four with one QR code.</p>
+  <div class="grid4" style="margin-bottom:5mm">
+    <div class="card stat"><div class="v">1 scan</div><div class="l">guest opens the menu — no app to install</div></div>
+    <div class="card stat"><div class="v">0 sec</div><div class="l">order reaches the kitchen screen instantly</div></div>
+    <div class="card stat"><div class="v">4</div><div class="l">languages incl. Arabic (right-to-left)</div></div>
+    <div class="card stat"><div class="v">∞</div><div class="l">restaurants on one platform you control</div></div>
+  </div>
+  <h3>The business model</h3>
+  <p>You sell TableTap as a <b>monthly subscription</b> (SaaS). One server runs all your client restaurants. Each new restaurant costs you almost nothing extra, so every new client is mostly profit. The platform already includes subscription dates, suspension and backups.</p>
+  <div class="grid3">
+    <div class="card"><h4 style="margin-top:0">You sell</h4><p class="small muted">A setup service (menu, photos, QR stands) + a monthly subscription.</p></div>
+    <div class="card"><h4 style="margin-top:0">They get</h4><p class="small muted">Faster service, bigger bills, fewer mistakes, menu changes in seconds.</p></div>
+    <div class="card"><h4 style="margin-top:0">You earn</h4><p class="small muted">Recurring revenue every month — it grows with every client you add.</p></div>
+  </div>
+  <h3>Your unfair advantage</h3>
+  <p>You already own the tools most software startups pay thousands for:</p>
+  <table>
+    <tr><th>Your tool</th><th>How it sells TableTap</th></tr>
+    <tr><td><b>Lead Finder</b></td><td>Finds every restaurant/café in a city with owner names, phones, emails and websites.</td></tr>
+    <tr><td><b>Website Inspector</b></td><td>Shows which restaurants have no online menu or a bad website — your warmest leads.</td></tr>
+    <tr><td><b>MailBlaster</b></td><td>Sends personal cold emails and follow-ups at scale, with tracking and unsubscribe built in.</td></tr>
+    <tr><td><b>AdSizer</b></td><td>Produces every ad size for Facebook, Instagram, TikTok and Google in minutes.</td></tr>
+    <tr><td><b>File Studio</b></td><td>Converts client PDF menus and photos, removes image backgrounds for beautiful dish photos.</td></tr>
+  </table>
+  <div class="callout ok"><b>The goal of this playbook</b>10 paying restaurants in 90 days → 50 in 6 months → 100+ in 12 months.</div>
+</section>
+
+<!-- ============================================================ 2 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 2</div><h2>What TableTap is &amp; how it works</h2></div><div class="no">02</div></div>
+  <p class="lead">TableTap is a complete digital ordering system for dine-in restaurants: a QR menu for guests, a live screen for the kitchen, a control panel for the owner — and a platform for you to manage all your clients.</p>
+  <h3>The order journey</h3>
+  <div class="flow">
+    <div class="n"><div class="e">📱</div><b>Scan</b>Guest scans the QR code on table 5</div><div class="a">→</div>
+    <div class="n"><div class="e">🍔</div><b>Choose</b>Photos, options, extras, notes</div><div class="a">→</div>
+    <div class="n"><div class="e">✅</div><b>Order</b>Price checked by the server</div><div class="a">→</div>
+    <div class="n"><div class="e">👨‍🍳</div><b>Cook</b>Ticket beeps on the kitchen screen</div><div class="a">→</div>
+    <div class="n"><div class="e">🔔</div><b>Ready</b>Guest's phone updates live</div><div class="a">→</div>
+    <div class="n"><div class="e">💳</div><b>Pay</b>Request bill, staff settles</div>
+  </div>
+  <h3>Who uses what</h3>
+  <table>
+    <tr><th>Person</th><th>Screen</th><th>What they do</th></tr>
+    <tr><td><b>Guest</b></td><td>Phone, via table QR</td><td>Browse, order, track the order, call a waiter, ask for the bill — in EN/FR/ES/AR.</td></tr>
+    <tr><td><b>Cook</b></td><td>Kitchen tablet / TV</td><td>Start and finish tickets, see notes and allergies, mark dishes sold out ("86").</td></tr>
+    <tr><td><b>Waiter</b></td><td>Phone or tablet</td><td>Live orders, waiter calls, bill requests, mark paid (cash/card), settle a table.</td></tr>
+    <tr><td><b>Manager / owner</b></td><td>Computer or phone</td><td>Menu, prices, photos, tables &amp; QR printing, staff, reports, settings.</td></tr>
+    <tr><td><b>You (platform)</b></td><td>Your admin</td><td>All restaurants, subscriptions, suspensions, backups.</td></tr>
+  </table>
+  <h3>Built to be trusted</h3>
+  <div class="grid2">
+    <ul>
+      <li><b>Server-side pricing</b> — guests can't change prices from their phone.</li>
+      <li><b>Rules enforced</b> — required options, sold-out items and serving hours.</li>
+      <li><b>Secure QR codes</b> — random codes, replaceable in one click if abused.</li>
+      <li><b>Anti-spam</b> — limits on orders and waiter calls per table.</li>
+    </ul>
+    <ul>
+      <li><b>Separate data</b> per restaurant; staff roles with limited access.</li>
+      <li><b>Encrypted passwords</b>, protected forms, safe photo uploads.</li>
+      <li><b>Automatic daily backups</b>, exact money maths, tax &amp; service charge.</li>
+      <li><b>Tested</b> — 34 automated tests + full browser tests.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 3</div><h2>The guest experience</h2></div><div class="no">03</div></div>
+  <p class="lead">This is what sells the product. Always demo from a phone — owners fall in love when they see their own dishes on it.</p>
+  <div class="shots p4">
+    <figure class="phone"><img src="img/07-guest-menu.png"><figcaption>1 · Branded menu with categories</figcaption></figure>
+    <figure class="phone"><img src="img/08-guest-item.png"><figcaption>2 · Dish details, options &amp; extras</figcaption></figure>
+    <figure class="phone"><img src="img/09-guest-cart.png"><figcaption>3 · Cart with notes &amp; totals</figcaption></figure>
+    <figure class="phone"><img src="img/10-guest-success.png"><figcaption>4 · Order sent + live tracking</figcaption></figure>
+  </div>
+  <h3>Features to mention in every demo</h3>
+  <div class="grid2">
+    <ul>
+      <li><b>No app download</b> — opens in the phone's browser in 1 second.</li>
+      <li><b>Photos or emoji tiles</b>, labels (Popular, Chef's pick, Spicy, Vegan…), allergens and calories.</li>
+      <li><b>Options &amp; extras with prices</b> (size, sauce, extra cheese) — this is what raises the average bill.</li>
+      <li><b>Promo prices</b> ("was $14, now $11") shown automatically.</li>
+    </ul>
+    <ul>
+      <li><b>Live status</b>: Received → Preparing → Ready → Served, with vibration when ready.</li>
+      <li><b>Call waiter / Request bill</b> (cash or card) from the phone.</li>
+      <li><b>4 languages</b> incl. Arabic right-to-left — tourists switch in one tap.</li>
+      <li><b>Wi-Fi password</b> copied in one tap; breakfast menu auto-hides after 11:30.</li>
+    </ul>
+  </div>
+  <div class="shots p3" style="margin-top:3mm">
+    <figure class="phone"><img src="img/12-guest-arabic.png"><figcaption>Arabic (RTL) menu</figcaption></figure>
+    <figure class="phone"><img src="img/14-guest-ready.png"><figcaption>"Your order is ready" update</figcaption></figure>
+    <figure class="phone"><img src="img/21-admin-mobile.png"><figcaption>Waiter view on a phone</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============================================================ 4 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 4</div><h2>Kitchen, staff &amp; owner tools</h2></div><div class="no">04</div></div>
+  <h3>Kitchen display (KDS)</h3>
+  <figure class="wide-shot"><img src="img/13-kitchen.png"><figcaption>Tickets move New → Preparing → Ready. Timers turn amber at 10 min and red at 20 min.</figcaption></figure>
+  <ul style="margin-top:3mm">
+    <li>Huge readable text, dark screen, works on any tablet or TV with a browser. Sound chime for every new order and repeat reminder if nobody starts it.</li>
+    <li>Guest notes in yellow ("extra crispy", "no onions"), allergy notes can't be missed. Tap a line to tick it off.</li>
+    <li><b>"86" panel</b>: switch off a dish in one tap — guests instantly see "Sold out". Screen stays awake; reconnects automatically.</li>
+  </ul>
+  <h3>Owner &amp; manager panel</h3>
+  <div class="shots" style="grid-template-columns:repeat(4,1fr);gap:3mm">
+    <figure><img src="img/17-dashboard-data.png"><figcaption>Dashboard: revenue, orders, average bill, kitchen time, best sellers</figcaption></figure>
+    <figure><img src="img/03-menu.png"><figcaption>Menu editor: drag to reorder, stock switch, options</figcaption></figure>
+    <figure><img src="img/15-live.png"><figcaption>Live orders, waiter calls, bill requests</figcaption></figure>
+    <figure><img src="img/05-tables.png"><figcaption>Tables &amp; QR codes with per-table sales</figcaption></figure>
+  </div>
+</section>
+
+<section class="page-break">
+  <h3 style="margin-top:0">Everything the owner can do</h3>
+  <table>
+    <tr><th style="width:28%">Area</th><th>Features</th></tr>
+    <tr><td><b>Dashboard</b></td><td>Today / 7 / 30 days revenue with % vs previous period, orders, average bill, items sold, kitchen time, sales by hour/day chart, best sellers, top tables, payments by method, unpaid alert, setup checklist.</td></tr>
+    <tr><td><b>Menu</b></td><td>Categories with icons, descriptions and serving hours (e.g. breakfast 07:00–11:30). Items with photo, emoji, price, promo price, labels, allergens, calories, prep time, option groups (pick one / pick several / required / max), in-stock and visible switches, duplicate, drag-and-drop ordering, "restock all".</td></tr>
+    <tr><td><b>Tables &amp; QR</b></td><td>Add one or 200 tables at once, zones (Terrace, Upstairs), seats, per-table sales, download PNG, print table cards (6/page), tent cards (2/page) or stickers (12/page), replace a QR code, pause a table.</td></tr>
+    <tr><td><b>Live orders</b></td><td>Accept → Ready → Served, mark paid cash/card, cancel with reason (guest sees it), restore, print kitchen ticket or guest bill, settle a whole table in one click, sound + desktop notifications.</td></tr>
+    <tr><td><b>Order history</b></td><td>Filter by status/date, search by number/table/name, order timeline, export to Excel (CSV).</td></tr>
+    <tr><td><b>Staff</b></td><td>Accounts for managers, waiters and kitchen with limited permissions; reset passwords; disable instantly.</td></tr>
+    <tr><td><b>Settings</b></td><td>Name, logo, cover photo, brand colour, phone, address, Wi-Fi, currency (20 built in), tax included or added, service charge, language, time zone, ordering on/off with message, auto-accept, ask guest name, activity log.</td></tr>
+  </table>
+  <div class="grid2">
+    <figure><img src="img/18-print-qr.png"><figcaption>Print-ready QR table cards in the restaurant's colours</figcaption></figure>
+    <figure><img src="img/19b-ticket.png" style="max-height:80mm;object-fit:contain;background:#e9e7e4"><figcaption>80 mm kitchen ticket</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============================================================ 5 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 5</div><h2>Your platform — the business engine</h2></div><div class="no">05</div></div>
+  <p class="lead">As the platform owner you see every restaurant you sell to, and you control who is active.</p>
+  <table>
+    <tr><th>You can…</th><th>Why it matters for money</th></tr>
+    <tr><td>Create a restaurant + its manager login in 30 seconds (optionally with the demo menu)</td><td>Fast onboarding = more clients per week.</td></tr>
+    <tr><td>Set a <b>plan</b> and a <b>"paid until" date</b>; extend 30 days or 1 year in one click</td><td>Subscriptions tracked without spreadsheets.</td></tr>
+    <tr><td>Suspend / activate</td><td>Unpaid? Guests see "menu unavailable" until payment — strong reason to pay on time.</td></tr>
+    <tr><td>See each restaurant's orders and revenue (30 days) and last order</td><td>Spot inactive clients before they cancel; show value at renewal.</td></tr>
+    <tr><td>Open any restaurant's admin to help them</td><td>Fast support without asking for passwords.</td></tr>
+    <tr><td>Download a full backup</td><td>Protects your business and your clients' data.</td></tr>
+  </table>
+  <div class="callout warn"><b>Rule: never let a client run unpaid for long</b>Give a 7-day grace period, then suspend. Reactivate the moment they pay. Put this in your terms.</div>
+
+  <!-- ============================================================ 6 -->
+</section>
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 6</div><h2>Going live: hosting &amp; setup</h2></div><div class="no">06</div></div>
+  <p><b>Important:</b> on your PC, the QR codes only work for guests on the same Wi-Fi. To sell it as a service, TableTap must be <b>online</b> so any guest on 4G/5G can order.</p>
+  <div class="steps">
+    <div class="step"><div><h4>Buy a domain</h4><p class="small muted">e.g. tabletap-yourcity.com (≈ $10–15/year). Short and easy to type.</p></div></div>
+    <div class="step"><div><h4>Rent a small server (VPS)</h4><p class="small muted">2 GB RAM is plenty for your first 50–100 restaurants (≈ $5–12/month at Hetzner, DigitalOcean, Contabo, OVH…). Choose a data centre close to your customers.</p></div></div>
+    <div class="step"><div><h4>Install TableTap + HTTPS</h4><p class="small muted">Copy the folder, <code>pip install -r requirements.txt</code>, run behind Caddy or nginx for free HTTPS certificates. Set <code>TABLETAP_PUBLIC_URL</code>, <code>TABLETAP_TRUST_PROXY=1</code>, <code>TABLETAP_SECURE_COOKIES=1</code>. Run it as a service so it restarts automatically.</p></div></div>
+    <div class="step"><div><h4>Point the domain to the server</h4><p class="small muted">DNS A-record → server IP. Test from a phone on 4G.</p></div></div>
+    <div class="step"><div><h4>Backups off the server</h4><p class="small muted">Daily backups are created automatically; also copy them weekly to another place (your PC or cloud storage).</p></div></div>
+    <div class="step"><div><h4>Create your demo restaurant</h4><p class="small muted">Beautiful photos, 20+ dishes, a printed tent card with its QR code — this is your sales weapon.</p></div></div>
+  </div>
+  <div class="callout info"><b>Alternative for a single restaurant</b>Run TableTap on the restaurant's PC and expose it with a <i>named</i> Cloudflare Tunnel on your domain. Don't use temporary tunnel URLs — they change and break printed QR codes.</div>
+</section>
+
+<!-- ============================================================ 7 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 7</div><h2>Who to sell to</h2></div><div class="no">07</div></div>
+  <h3>Best targets (start here)</h3>
+  <table>
+    <tr><th>Segment</th><th>Why they buy</th><th>Priority</th></tr>
+    <tr><td><b>Busy cafés &amp; brunch places</b></td><td>Many small orders, few staff, young guests who love ordering by phone.</td><td><span class="badge">Top</span></td></tr>
+    <tr><td><b>Casual restaurants, burger &amp; pizza</b></td><td>Lots of options/extras → bigger bills; rush hours overload waiters.</td><td><span class="badge">Top</span></td></tr>
+    <tr><td><b>Hotels, beach clubs, pool bars, rooftops</b></td><td>Guests spread out, tourists need other languages, high prices.</td><td><span class="badge">Top</span></td></tr>
+    <tr><td><b>Food courts &amp; shisha lounges</b></td><td>Many tables, repeat orders during the evening.</td><td><span class="badge info">Good</span></td></tr>
+    <tr><td><b>New restaurants about to open</b></td><td>No printed menus yet; open to new systems; buying everything anyway.</td><td><span class="badge info">Good</span></td></tr>
+    <tr><td>Fine dining</td><td>Prefer waiters at the table — pitch the <i>menu-only</i> plan and multi-language.</td><td><span class="badge ok">Later</span></td></tr>
+  </table>
+  <h3>Signs a restaurant needs TableTap</h3>
+  <ul class="grid2" style="display:grid;padding-left:5mm">
+    <li>Paper menus with prices crossed out or stickers on top</li>
+    <li>Reviews complaining about slow service or long waits for the bill</li>
+    <li>No online menu, or a PDF menu on Instagram</li>
+    <li>Tourist area / multi-language guests</li>
+    <li>Big terrace far from the counter</li>
+    <li>Recently opened or renovating</li>
+  </ul>
+  <h3>Who decides</h3>
+  <p>Talk to the <b>owner</b> (small places) or the <b>general manager / F&amp;B manager</b> (hotels, groups). Waiters and cooks are allies in the demo — they feel the pain every night — but they don't sign.</p>
+  <h3>Best time to contact</h3>
+  <table>
+    <tr><th>Channel</th><th>Best time</th><th>Avoid</th></tr>
+    <tr><td>Walk-in visit</td><td>Tue–Thu, 15:00–17:30 (between lunch and dinner)</td><td>Lunch/dinner rush, Friday night, weekends</td></tr>
+    <tr><td>Phone / WhatsApp</td><td>10:00–11:30 or 15:00–17:00</td><td>12:00–14:30, 19:00–22:30</td></tr>
+    <tr><td>Email</td><td>Tue–Thu mornings</td><td>Friday evening, weekends</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ 8 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 8</div><h2>Why owners buy: value &amp; ROI</h2></div><div class="no">08</div></div>
+  <p>Owners don't buy software. They buy <b>more money, less stress</b>. Always translate features into money.</p>
+  <table>
+    <tr><th>Feature</th><th>Benefit you say to the owner</th></tr>
+    <tr><td>Photos, options, extras, labels</td><td>"Guests add more when they see the food and the extras — your average bill goes up."</td></tr>
+    <tr><td>Instant order to kitchen</td><td>"No waiting for a waiter — tables order sooner, eat sooner, and free the table sooner."</td></tr>
+    <tr><td>Kitchen screen with notes</td><td>"No lost or misheard orders, no wasted plates."</td></tr>
+    <tr><td>Edit prices anytime</td><td>"No more reprinting menus — change a price in 10 seconds."</td></tr>
+
+
+    <tr><td>4 languages</td><td>"Tourists order confidently — no pointing at the menu."</td></tr>
+
+  </table>
+  <h3>The ROI conversation (use their numbers)</h3>
+  <p>Ask the owner: <i>"How many orders a day? What's your average bill?"</i> Then calculate together:</p>
+  <div class="card soft avoid">
+    <table style="margin:0">
+      <tr><th>Example café</th><th class="r">Value</th></tr>
+      <tr><td>Orders per day</td><td class="r num">120</td></tr>
+      <tr><td>Average bill</td><td class="r num">$12.00</td></tr>
+      <tr><td>If extras/photos add just <b>5%</b> to the bill</td><td class="r num">+$0.60 per order</td></tr>
+      <tr><td>Extra revenue per month (120 × $0.60 × 30)</td><td class="r num">+$2,160</td></tr>
+      <tr><td>TableTap Standard plan</td><td class="r num">−$39</td></tr>
+      <tr class="total"><td>Return on the subscription</td><td class="r num">≈ 55× the cost</td></tr>
+    </table>
+  </div>
+  <div class="callout warn"><b>Be honest with numbers</b>The 5% is an example for the conversation, not a promise. Say: "Even if it only adds 1% it pays for itself." After a month, show them the real numbers from their dashboard.</div>
+  <h3>Your one-sentence pitch</h3>
+  <div class="script"><div class="h">Elevator pitch</div>"TableTap lets your guests order from their table by scanning a QR code — the order goes straight to your kitchen screen, so you serve faster, sell more extras, and never reprint a menu again. I'll set it all up for you, and the first 14 days are free."</div>
+</section>
+
+<!-- ============================================================ 9 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 9</div><h2>Pricing &amp; plans</h2></div><div class="no">09</div></div>
+  <p class="lead">Simple plans, monthly or yearly, plus a one-time setup fee. Prices below are <b>starting points</b> — adjust to your market after 10 sales conversations.</p>
+  <div class="plans">
+    <div class="plan"><h4>Menu</h4><div class="price">$19<small>/month</small></div><div class="alt">≈ $9/month in lower-price markets</div>
+      <ul><li>QR digital menu, photos, 4 languages</li><li>Unlimited edits &amp; sold-out switch</li><li>Browse-only (no ordering)</li><li>Printed QR cards</li></ul></div>
+    <div class="plan hot"><div class="tag">MOST POPULAR</div><h4>Standard</h4><div class="price">$39<small>/month</small></div><div class="alt">≈ $19/month in lower-price markets</div>
+      <ul><li>Everything in Menu</li><li><b>Table ordering</b> + live tracking</li><li><b>Kitchen display</b> + sound alerts</li><li>Waiter calls &amp; bill requests</li><li>Dashboard, reports, CSV export</li><li>Staff accounts</li></ul></div>
+    <div class="plan"><h4>Pro</h4><div class="price">$69<small>/month</small></div><div class="alt">≈ $35/month in lower-price markets</div>
+      <ul><li>Everything in Standard</li><li>Priority WhatsApp support</li><li>Monthly performance report</li><li>Menu updates done for them</li><li>Photo session / styling help</li></ul></div>
+  </div>
+  <table>
+    <tr><th>Extra</th><th class="r">Suggested price</th><th>Notes</th></tr>
+    <tr><td><b>Setup fee</b> (menu entry, photos cleanup, configuration, training)</td><td class="r">$49 – $149</td><td>Waive it for your first 5 clients (case studies).</td></tr>
+    <tr><td><b>Acrylic QR table stands</b></td><td class="r">cost + 50–100%</td><td>Buy in bulk; logo-printed stands look premium.</td></tr>
+    <tr><td><b>Kitchen tablet</b> (resold, preconfigured)</td><td class="r">cost + 20–30%</td><td>Optional — any browser device works.</td></tr>
+    <tr><td><b>Each extra location</b></td><td class="r">−20% per location</td><td>Groups and chains.</td></tr>
+    <tr><td><b>Yearly payment</b></td><td class="r">2 months free</td><td>Improves cash flow and locks the client in.</td></tr>
+  </table>
+  <h3>Pricing rules that make more money</h3>
+  <ul>
+    <li><b>Anchor high, sell the middle:</b> show all three plans — most people choose Standard.</li>
+    <li><b>Free trial 14 days, not 30:</b> long enough to feel the value, short enough to create urgency.</li>
+    <li><b>Charge the setup fee</b> once you have 5 happy clients — your time is valuable.</li>
+    <li><b>Price in local currency</b> (the app supports 20 currencies incl. MAD, EUR, AED, SAR, TND, DZD, EGP).</li>
+    <li><b>Founding-client offer:</b> first 10 restaurants get their price locked for life. Creates urgency without discounts forever.</li>
+    <li>Never compete on price alone — compete on <b>setup done for them + local support</b>.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ 10 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 10</div><h2>Money math: costs, profit, goals</h2></div><div class="no">10</div></div>
+  <h3>Your monthly running costs (example)</h3>
+  <table>
+    <tr><th>Cost</th><th class="r">Per month</th></tr>
+    <tr><td>VPS server (upgrade when you pass ~100 restaurants)</td><td class="r num">$10 – $40</td></tr>
+    <tr><td>Domain (yearly ÷ 12)</td><td class="r num">$1</td></tr>
+    <tr><td>Off-site backup storage</td><td class="r num">$0 – $5</td></tr>
+    <tr><td>Email sending (your SMTP / provider)</td><td class="r num">$0 – $20</td></tr>
+    <tr><td>Ads budget (see Section 14)</td><td class="r num">$150 – $600</td></tr>
+    <tr><td>Phone / internet / transport for visits</td><td class="r num">your cost</td></tr>
+  </table>
+  <h3>Revenue at the Standard price ($39/month)</h3>
+  <table>
+    <tr><th>Paying restaurants</th><th class="r">Monthly revenue</th><th class="r">Yearly revenue</th><th>Milestone</th></tr>
+    <tr><td>10</td><td class="r num">$390</td><td class="r num">$4,680</td><td>Proof it works (90 days)</td></tr>
+    <tr><td>25</td><td class="r num">$975</td><td class="r num">$11,700</td><td>Covers ads + costs comfortably</td></tr>
+    <tr><td>50</td><td class="r num">$1,950</td><td class="r num">$23,400</td><td>Part-time salary (6 months)</td></tr>
+    <tr><td>100</td><td class="r num">$3,900</td><td class="r num">$46,800</td><td>Full-time business (12 months)</td></tr>
+    <tr><td>250</td><td class="r num">$9,750</td><td class="r num">$117,000</td><td>Hire sales + support</td></tr>
+  </table>
+  <p class="small muted">Plus setup fees and hardware margin. Mixed plans (Menu/Standard/Pro) usually average close to the Standard price. These are illustrations, not guarantees.</p>
+  <h3>The three numbers that decide if you win</h3>
+  <div class="grid3">
+    <div class="card"><h4 style="margin-top:0">CAC</h4><p class="small">Cost to win one client = (ads + your time + gifts) ÷ new clients. Target: <b>less than 3 months of subscription</b>.</p></div>
+    <div class="card"><h4 style="margin-top:0">Churn</h4><p class="small">% of clients cancelling each month. Target: <b>under 3%</b>. Good onboarding + support keep it low.</p></div>
+    <div class="card"><h4 style="margin-top:0">LTV</h4><p class="small">Lifetime value = monthly price ÷ churn. $39 ÷ 3% ≈ <b>$1,300</b> per client. You can afford to spend to win clients.</p></div>
+  </div>
+  <div class="callout ok"><b>Simple rule</b>If a client is worth ~$1,300 over their lifetime, spending $50–150 in ads and time to win them is a great deal. Don't be afraid to invest in acquisition once your trial-to-paid rate is proven.</div>
+</section>
+
+<!-- ============================================================ 11 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 11</div><h2>Sales system (the pipeline)</h2></div><div class="no">11</div></div>
+  <p class="lead">Selling is a machine with stages. Track every restaurant in one of these stages (a spreadsheet is fine at the start).</p>
+  <div class="steps">
+    <div class="step"><div><h4>Find — build a list of 300 restaurants in your city</h4><p class="small">Use <b>Lead Finder</b> by category (restaurant, café, hotel, bar) and area. Export name, phone, email, website, address, rating.</p></div></div>
+    <div class="step"><div><h4>Qualify — score each lead A / B / C</h4><p class="small"><b>A</b> = busy, 4+ rating, many reviews, paper/PDF menu or tourist area. <b>B</b> = decent. <b>C</b> = tiny or closing. Run <b>Website Inspector</b> on their site: no menu page or slow site = A. Start with A leads only.</p></div></div>
+    <div class="step"><div><h4>Personalise — prepare a mini-demo for A leads</h4><p class="small">Create their restaurant in your platform with their name, colour, logo and 5–8 real dishes from their Instagram/Google photos. Print one tent card with its QR. <b>This is the #1 closing trick.</b></p></div></div>
+    <div class="step"><div><h4>Contact — multi-channel sequence (Section 12)</h4><p class="small">Day 1 email (MailBlaster) → Day 3 WhatsApp → Day 5 walk-in with the printed QR → Day 9 follow-up email → Day 14 last message.</p></div></div>
+    <div class="step"><div><h4>Demo — 10 minutes, on the owner's phone</h4><p class="small">Let <i>them</i> scan and order. The kitchen screen beeps on your tablet. Show the dashboard. Ask the ROI questions (Section 8).</p></div></div>
+    <div class="step"><div><h4>Trial — 14 days, fully set up by you</h4><p class="small">Full menu, QR stands on tables, 15-minute staff training. Visit/call on day 2 and day 7.</p></div></div>
+    <div class="step"><div><h4>Close — day 12–14</h4><p class="small">Show their numbers (orders through TableTap, average bill, best sellers). Offer yearly (2 months free) first, then monthly. Ask for a video testimonial and 2 referrals.</p></div></div>
+  </div>
+  <h3>Weekly activity targets (solo founder)</h3>
+  <table>
+    <tr><th>Activity</th><th class="r">Per week</th><th>Expected result (typical ranges)</th></tr>
+    <tr><td>Personal cold emails</td><td class="r">150–250</td><td>5–15 replies</td></tr>
+    <tr><td>WhatsApp / calls</td><td class="r">40</td><td>5–10 conversations</td></tr>
+    <tr><td>Walk-in visits</td><td class="r">15–20</td><td>4–8 demos</td></tr>
+    <tr><td>Demos</td><td class="r">8–12</td><td>3–5 trials</td></tr>
+    <tr><td>Trials started</td><td class="r">3–5</td><td>1–3 paying clients</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ 12 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 12</div><h2>Scripts: email, WhatsApp, walk-in, phone</h2></div><div class="no">12</div></div>
+  <p class="small muted">Replace <em style="color:var(--accent);font-style:normal">{brackets}</em>. Keep it short, personal and honest. Always email the business address, include your name and an easy way to opt out (MailBlaster adds the unsubscribe link).</p>
+  <div class="script"><div class="h">Email 1 — Day 1 · Subject: {Restaurant} menu on every table</div>
+Hi {First name},<br><br>
+I made a quick live demo of <em>{Restaurant}</em>'s menu with table ordering — scan this from your phone: <em>{demo link}</em><br><br>
+Guests scan the QR on the table, order with photos and extras, and the order appears instantly on your kitchen screen. No app, no waiting for the waiter, and you can change prices in seconds.<br><br>
+I set everything up for free and you can try it for 14 days. Worth a 10-minute look this week?<br><br>
+{Your name} · {phone} · TableTap</div>
+  <div class="script"><div class="h">Email 2 — Day 4 · Subject: re: {Restaurant} menu</div>
+Hi {First name}, just making sure you saw the demo I built for {Restaurant}: <em>{demo link}</em>.<br>
+Cafés using table ordering serve rush hours with fewer waiters, and guests add more extras when they see photos.<br>
+Can I drop by Tuesday or Wednesday afternoon for 10 minutes?</div>
+  <div class="script"><div class="h">Email 3 — Day 10 · Subject: close the loop?</div>
+Hi {First name}, I don't want to fill your inbox. If digital ordering isn't a priority right now, no problem — just reply "later" and I'll check back in a few months. If you'd like to try it free for 14 days, reply "yes" and I'll set it up. Thanks!</div>
+  <div class="script"><div class="h">WhatsApp — Day 3</div>
+Hello {First name} 👋 I'm {name} from TableTap. I built a free demo of {Restaurant}'s menu where guests order from the table by QR: <em>{demo link}</em><br>
+Can I show you in 10 minutes this week? I'll bring the QR stand so you can test it with your team 🙂</div>
+</section>
+
+<section class="page-break">
+  <div class="script"><div class="h">Walk-in script (3–5 PM) — 60 seconds</div>
+"Hi, is the owner or manager around? … Hi {name}, I'm {your name}. I help cafés in {area} serve faster with QR ordering. I actually built a demo with your menu — can I show you, it takes one minute?"<br><br>
+<em>[Hand them the tent card. Let them scan with THEIR phone. Let them order a dish. Turn your tablet — the kitchen screen beeps with their order.]</em><br><br>
+"That's it — the guest orders, your kitchen sees it instantly, and you change prices whenever you want. I set everything up myself: full menu, QR stands, training. You try it 14 days free. If your team doesn't love it, I take it back. Shall we start Monday?"</div>
+  <div class="script"><div class="h">Phone call — 45 seconds</div>
+"Hi, this is {name}. Quick question — who takes care of the menu and the ordering system at {Restaurant}? … Great. I've built a demo of your menu where guests order from the table with a QR code; it goes straight to the kitchen. Most owners like seeing it on their phone. Can I send you the link on WhatsApp, and pass by for 10 minutes on Tuesday or Wednesday afternoon?"</div>
+  <div class="script"><div class="h">Closing the trial — Day 12</div>
+"In 12 days you had <em>{N}</em> orders through TableTap, average bill <em>{X}</em>, and your best seller was <em>{dish}</em>. Your team says rush hours are easier. To keep it running, it's <em>{price}</em> per month — or pay yearly and you get 2 months free. Which works better for you?"</div>
+  <div class="script"><div class="h">Asking for referrals — after the first month</div>
+"I'm really happy it's working for you. Do you know 2 other owners who would like this? For each one who joins, you get a free month."</div>
+  <div class="script"><div class="h">Testimonial request</div>
+"Could I film you for 15 seconds saying what changed since you started? Just your honest words — it helps me a lot. I'll send you the video so you can post it too."</div>
+
+<!-- ============================================================ 13 -->
+  <div class="sec-head" style="margin-top:6mm"><div><div class="kicker">Section 13</div><h2>Handling objections</h2></div><div class="no">13</div></div>
+  <table>
+    <tr><th style="width:32%">They say</th><th>You answer</th></tr>
+    <tr><td>"My guests are old / won't use it."</td><td>"They don't have to — waiters still take orders the normal way. The QR is an extra option. Let's look at the numbers after 14 days."</td></tr>
+    <tr><td>"It will replace my waiters' personal service."</td><td>"It removes the boring part — running back and forth with orders and bills — so they spend more time with guests."</td></tr>
+    <tr><td>"Too expensive."</td><td>"It's about {price ÷ 30} per day — less than one coffee. If it adds one extra dessert a day, it's paid."</td></tr>
+    <tr><td>"I already have a QR menu (PDF)."</td><td>"A PDF can't take orders, show sold-out items, update prices instantly, or send orders to the kitchen. Let me show you the difference."</td></tr>
+    <tr><td>"I don't have time to set it up."</td><td>"You don't need any — I build the whole menu, print the QR stands and train your team."</td></tr>
+    <tr><td>"What if the internet goes down?"</td><td>"Guests use their own mobile data, and your staff can take orders normally as always. Nothing stops."</td></tr>
+    <tr><td>"Guests will prank-order."</td><td>"Each table has its own secret code, orders are limited per table, and staff can cancel or replace a QR in one click."</td></tr>
+    <tr><td>"I need to think about it."</td><td>"Of course. The trial is free and you can stop anytime — thinking is easier when you see real orders. Shall I set it up Monday?"</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ 14 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 14</div><h2>Advertising strategy</h2></div><div class="no">14</div></div>
+  <p class="lead">Ads work best <b>after</b> you have 3–5 real clients, a landing page and testimonials. Before that, direct outreach (Sections 11–12) is cheaper and teaches you what owners want.</p>
+  <div class="callout info"><b>The funnel</b>Ad (video of real ordering) → landing page with a demo QR + pricing → lead (form or WhatsApp) → <b>call within 1 hour</b> and book a demo → 14-day trial → paid.</div>
+  <h3>1 · Meta ads (Facebook + Instagram) — main channel</h3>
+  <table>
+    <tr><th style="width:25%">Setting</th><th>Recommendation</th></tr>
+    <tr><td>Objective</td><td><b>Leads</b> (instant form) or <b>Messages</b> (click-to-WhatsApp). Start with WhatsApp — owners reply faster.</td></tr>
+    <tr><td>Location</td><td>Your city + 20–40 km. Add tourist cities later.</td></tr>
+    <tr><td>Audience</td><td>Age 25–60; interests such as restaurant management, restaurant owners, hospitality industry, café, food service, small business owners. Let Meta's broad targeting learn after 50+ leads.</td></tr>
+    <tr><td>Budget</td><td>Test: <b>$5–10/day for 14 days</b> with 3 different creatives. Keep the winner, pause the rest, then raise 20% every 3 days if cost per lead stays good.</td></tr>
+    <tr><td>Creatives</td><td>15–30 s vertical video: phone scans QR → orders → kitchen screen beeps → food arrives. Plus 1 carousel (menu → cart → kitchen → dashboard). Make all sizes with <b>AdSizer</b> (1:1, 4:5, 9:16).</td></tr>
+    <tr><td>Retargeting</td><td>People who watched 50% of the video or visited the landing page: testimonial video + "14 days free, setup included".</td></tr>
+  </table>
+  <h3>Ad copy examples</h3>
+  <div class="grid2">
+    <div class="script" style="margin:0"><div class="h">Ad A — speed</div>Rush hour, not enough waiters? 🍽️<br>Guests scan the QR, order from the table, and your kitchen sees it instantly.<br>✅ Setup done for you ✅ 14 days free<br><em>→ Send us a message for a free demo</em></div>
+    <div class="script" style="margin:0"><div class="h">Ad B — money</div>Menus with photos sell more. 📸<br>Show every dish, every extra, every promo — and change prices in 10 seconds.<br>TableTap — QR menu + table ordering for restaurants.<br><em>→ Try it free for 14 days</em></div>
+  </div>
+  <div class="grid2" style="margin-top:4mm">
+    <div class="script" style="margin:0"><div class="h">Ad C — tourists</div>Your guests speak 4 languages. Does your menu? 🌍<br>English, French, Spanish, Arabic — one QR code on every table.<br><em>→ Get your free demo</em></div>
+    <div class="script" style="margin:0"><div class="h">Ad D — social proof</div>"Since TableTap, our terrace orders twice as fast." — {Owner}, {Café}<br>Join {N} restaurants in {city}.<br><em>→ Book a 10-minute demo</em></div>
+  </div>
+</section>
+
+<section class="page-break">
+  <h3 style="margin-top:0">2 · Google Search ads — people already looking</h3>
+  <p>Small budget ($5–15/day), exact and phrase match keywords in your languages:</p>
+  <div class="grid2">
+    <ul>
+      <li>"QR code menu for restaurant"</li>
+      <li>"digital menu restaurant"</li>
+      <li>"restaurant ordering system"</li>
+      <li>"table ordering app"</li>
+      <li>"kitchen display system"</li>
+    </ul>
+    <ul>
+      <li>"menu QR code restaurant {city}"</li>
+      <li>"menu digital restaurant" (FR/ES)</li>
+      <li>"système de commande restaurant"</li>
+      <li>"قائمة طعام رقمية" (AR)</li>
+      <li>Negative keywords: free generator, template, jobs, download</li>
+    </ul>
+  </div>
+  <p>Send clicks to a landing page with a <b>live demo QR</b>, 3 plans, testimonials, and a WhatsApp button. Also create a free <b>Google Business Profile</b> for TableTap.</p>
+
+  <h3>3 · Other channels</h3>
+  <table>
+    <tr><th>Channel</th><th>How to use it</th><th>Cost</th></tr>
+    <tr><td>TikTok &amp; Reels (organic)</td><td>Behind-the-scenes of real installs, before/after, kitchen screen beeping. 3–5 videos/week.</td><td>Free</td></tr>
+    <tr><td>LinkedIn</td><td>Connect with hotel F&amp;B managers and restaurant group directors. Share case studies.</td><td>Free</td></tr>
+    <tr><td>Facebook groups</td><td>Local restaurant owner / hospitality groups — helpful posts, not spam.</td><td>Free</td></tr>
+    <tr><td>Partners</td><td>POS installers, restaurant suppliers, accountants, interior designers — 20% recurring commission.</td><td>Commission</td></tr>
+    <tr><td>Printed proof</td><td>Every QR stand has a small "Powered by TableTap" line — thousands of guests see it.</td><td>Almost free</td></tr>
+    <tr><td>Local events</td><td>Hospitality fairs, chambers of commerce, culinary school events.</td><td>Low</td></tr>
+  </table>
+
+  <h3>Ad budget plan (first 90 days)</h3>
+  <table>
+    <tr><th>Period</th><th>Spend</th><th>Goal</th></tr>
+    <tr><td>Month 1</td><td>$0 on ads</td><td>Direct outreach only. Get 3–5 clients, film testimonials, build landing page.</td></tr>
+    <tr><td>Month 2</td><td>$150–300 (Meta test)</td><td>Find the winning creative; target cost per lead under ~$10–20.</td></tr>
+    <tr><td>Month 3</td><td>$300–600 (Meta + Google)</td><td>Scale the winner; add retargeting; measure trial→paid rate.</td></tr>
+  </table>
+  <div class="callout warn"><b>Stop-loss rule</b>If an ad spends 3× your target cost per lead with no leads, pause it. If leads come but nobody books a demo, the problem is the landing page or your follow-up speed — call every lead within 1 hour.</div>
+  <h3>Ad KPIs to watch</h3>
+  <div class="grid4">
+    <div class="card stat"><div class="v" style="font-size:14pt">CTR</div><div class="l">aim &gt; 1%</div></div>
+    <div class="card stat"><div class="v" style="font-size:14pt">Cost / lead</div><div class="l">aim &lt; $20</div></div>
+    <div class="card stat"><div class="v" style="font-size:14pt">Lead → demo</div><div class="l">aim &gt; 30%</div></div>
+    <div class="card stat"><div class="v" style="font-size:14pt">Trial → paid</div><div class="l">aim &gt; 40%</div></div>
+  </div>
+  <p class="small muted" style="margin-top:3mm">Targets are typical starting benchmarks — your market will differ. Compare against your own first month.</p>
+</section>
+
+<!-- ============================================================ 15 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 15</div><h2>Social media &amp; content plan</h2></div><div class="no">15</div></div>
+  <p class="lead">Post where restaurant owners scroll: Instagram, TikTok, Facebook. Real restaurants beat polished graphics.</p>
+  <table>
+    <tr><th>Day</th><th>Content idea</th><th>Format</th></tr>
+    <tr><td>Monday</td><td>"Rush hour" — the kitchen screen filling up with orders on a Friday night</td><td>Reel / TikTok</td></tr>
+    <tr><td>Tuesday</td><td>Tip for owners: "3 menu photos that sell more desserts"</td><td>Carousel</td></tr>
+    <tr><td>Wednesday</td><td>Install day: printing QR stands, training the team, first order</td><td>Reel / Stories</td></tr>
+    <tr><td>Thursday</td><td>Client testimonial (15 seconds)</td><td>Reel</td></tr>
+    <tr><td>Friday</td><td>Before/after: paper menu with crossed prices → TableTap</td><td>Image / Reel</td></tr>
+    <tr><td>Weekend</td><td>Guests reacting to ordering from their table</td><td>Stories</td></tr>
+  </table>
+  <h3>10 video hooks that stop the scroll</h3>
+  <ol class="grid2" style="display:grid;padding-left:6mm;column-gap:8mm">
+    <li>"This café fired its paper menus."</li>
+    <li>"Watch how fast table 7 gets its food."</li>
+    <li>"Restaurant owners, stop reprinting menus."</li>
+    <li>"The waiter didn't take this order."</li>
+    <li>"How this terrace doubled its orders."</li>
+    <li>"POV: you're a cook and the screen beeps."</li>
+    <li>"Your menu in 4 languages in 1 minute."</li>
+    <li>"3 things guests hate about ordering."</li>
+    <li>"I set up a restaurant's ordering in 1 hour."</li>
+    <li>"What your menu is costing you."</li>
+  </ol>
+  <h3>Landing page — what it must contain</h3>
+  <ol>
+    <li>Headline: <b>"Your menu on every table. Orders straight to your kitchen."</b></li>
+    <li>30-second video + a <b>demo QR code</b> visitors can scan right now.</li>
+    <li>3 benefits (faster service · bigger bills · no reprinting).</li>
+    <li>Screenshots: guest phone, kitchen screen, dashboard (use the ones in this playbook).</li>
+    <li>Pricing (3 plans) + "Setup included · 14 days free · Cancel anytime".</li>
+    <li>Testimonials with photos, logos of client restaurants.</li>
+    <li>FAQ (internet, prank orders, old guests, languages).</li>
+    <li>Big WhatsApp button + short form (name, restaurant, phone).</li>
+  </ol>
+</section>
+
+<!-- ============================================================ 16-17 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 16</div><h2>Onboarding a new restaurant</h2></div><div class="no">16</div></div>
+  <p class="lead">A perfect first week = a client for years. Target: from "yes" to live in 48 hours.</p>
+  <div class="steps">
+    <div class="step"><div><h4>Collect (day 0)</h4><p class="small">Menu (photo/PDF — convert with File Studio), logo, dish photos, prices, tax rules, table list/zones, Wi-Fi name, staff names &amp; roles.</p></div></div>
+    <div class="step"><div><h4>Build (day 1)</h4><p class="small">Platform → New restaurant (plan + paid-until date + manager login). Settings: logo, cover, colour, currency, tax, language, time zone. Categories with serving hours; items with photos, options and extras; mark popular items.</p></div></div>
+    <div class="step"><div><h4>Tables &amp; QR (day 1)</h4><p class="small">Add tables in bulk with zones. Print table cards or tent cards; put them in acrylic stands. Test-scan every single QR code.</p></div></div>
+    <div class="step"><div><h4>Kitchen (day 2)</h4><p class="small">Tablet or TV with the kitchen account, full screen, sound enabled, "keep awake". Print test ticket if they use a printer.</p></div></div>
+    <div class="step"><div><h4>Train (day 2, 15 minutes)</h4><p class="small">Waiters: live orders, calls, settle a table, mark paid. Kitchen: start/ready, 86 switch. Manager: change a price, mark sold-out, dashboard.</p></div></div>
+    <div class="step"><div><h4>Go live + stay close</h4><p class="small">Be there for the first service if possible. Call on day 2 and day 7. Fix small things fast — it builds trust.</p></div></div>
+  </div>
+
+  <div class="sec-head" style="margin-top:8mm"><div><div class="kicker">Section 17</div><h2>Keeping clients (retention)</h2></div><div class="no">17</div></div>
+  <ul>
+    <li><b>Monthly value message</b> (WhatsApp or email): "This month: {orders} orders, {revenue} through TableTap, best seller {dish}." Numbers from their dashboard.</li>
+    <li><b>Watch activity</b> on your platform page: a restaurant with no orders for 7 days = call them today.</li>
+    <li><b>Fast support</b>: reply on WhatsApp within 1 hour during service times.</li>
+    <li><b>Seasonal updates</b>: offer to refresh photos and menus for Ramadan, summer, holidays.</li>
+    <li><b>Yearly plans</b>: offer the switch to every happy monthly client after 3 months.</li>
+    <li><b>Exit interview</b>: when someone cancels, ask why — then fix it for everyone.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ 18 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 18</div><h2>90-day launch plan</h2></div><div class="no">18</div></div>
+  <div class="week"><div class="w">Week 1</div><div>Buy domain + VPS, put TableTap online with HTTPS. Build your demo restaurant with great photos. Print 10 demo tent cards. Create WhatsApp Business account and email signature.</div></div>
+  <div class="week"><div class="w">Week 2</div><div>Lead Finder: 300 restaurants in your city. Qualify A/B/C. Build personalised mini-demos for the top 30 A leads. Write your sequences in MailBlaster.</div></div>
+  <div class="week"><div class="w">Week 3</div><div>Send emails to 30 A leads/day. 15 walk-ins. Goal: 8 demos, 3 free trials. Offer "founding client" price lock.</div></div>
+  <div class="week"><div class="w">Week 4</div><div>Install trials in 48 h, train staff, check-in calls. Keep outreach going. Film everything (content for later).</div></div>
+  <div class="week"><div class="w">Weeks 5–6</div><div>Close first trials (target 3 paying). Record 2–3 testimonials. Build the landing page with real screenshots, prices and videos. Start posting 3–5 videos/week.</div></div>
+  <div class="week"><div class="w">Weeks 7–8</div><div>Launch Meta ads test ($5–10/day, 3 creatives). Keep 150+ emails/week and 15 visits/week. Target 6 paying clients.</div></div>
+  <div class="week"><div class="w">Weeks 9–10</div><div>Scale the winning ad. Add Google Search ads. Start the referral program (1 free month per referral). Contact 5 potential partners (POS installers, suppliers).</div></div>
+  <div class="week"><div class="w">Weeks 11–12</div><div>Target <b>10+ paying restaurants</b>. Introduce the setup fee for new clients. Review numbers (Section 19), double down on the channel with the lowest cost per client. Plan the next city or segment (hotels, beach clubs).</div></div>
+  <div class="callout ok"><b>Daily routine that makes money</b>Morning: 30 personalised emails + follow-ups. Midday: create mini-demos, answer leads. 15:00–17:30: walk-ins and demos. Evening: content (1 video), plan tomorrow's list.</div>
+
+  <!-- ============================================================ 19 -->
+  <div class="sec-head" style="margin-top:7mm"><div><div class="kicker">Section 19</div><h2>Numbers to track every week</h2></div><div class="no">19</div></div>
+  <table>
+    <tr><th>Metric</th><th>Where to find it</th><th>Good sign</th></tr>
+    <tr><td>Leads contacted</td><td>MailBlaster + your sheet</td><td>200+/week</td></tr>
+
+    <tr><td>Demos → trials</td><td>Your sheet</td><td>&gt; 40%</td></tr>
+    <tr><td>Trials → paid</td><td>Platform page</td><td>&gt; 40–50%</td></tr>
+    <tr><td>MRR (monthly recurring revenue)</td><td>Paying clients × price</td><td>Up every month</td></tr>
+    <tr><td>Churn</td><td>Cancelled ÷ active</td><td>&lt; 3%/month</td></tr>
+
+    <tr><td>Cost per new client</td><td>(Ads + costs) ÷ new clients</td><td>&lt; 3 months of subscription</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ 20-21 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 20</div><h2>Legal &amp; professional basics</h2></div><div class="no">20</div></div>
+  <p class="small muted">General guidance, not legal advice — check the rules in your country with a local accountant or lawyer.</p>
+  <ul>
+    <li><b>Register a business</b> (sole trader / auto-entrepreneur / company) so you can invoice, open a business bank account, and get WhatsApp Business verification.</li>
+    <li><b>Simple contract / terms of service</b>: plan, price, billing date, 7-day grace then suspension, cancellation notice, who owns the menu content, support hours, uptime "best effort".</li>
+    <li><b>Privacy policy</b>: you store guest names, notes and orders on behalf of the restaurant. Explain what, why, how long, and how to delete. Respect GDPR if you have EU guests/clients.</li>
+    <li><b>Invoices</b> for every payment; keep records for taxes.</li>
+    <li><b>Email marketing</b>: business addresses only, honest subject lines, your identity, unsubscribe link, stop when asked. (MailBlaster handles unsubscribe + suppression.)</li>
+    <li><b>Security habits</b>: strong platform password, backups copied off the server weekly, server updates monthly.</li>
+    <li><b>Allergen info</b>: remind restaurants they are responsible for the allergen data they enter.</li>
+  </ul>
+
+  <div class="sec-head" style="margin-top:8mm"><div><div class="kicker">Section 21</div><h2>12-month roadmap &amp; upsells</h2></div><div class="no">21</div></div>
+  <table>
+    <tr><th>When</th><th>Add to the product</th><th>Why it makes money</th></tr>
+    <tr><td>Months 1–3</td><td>Landing page, online hosting, Windows installer for single-restaurant installs</td><td>Everything needed to sell</td></tr>
+    <tr><td>Months 3–6</td><td>Online payment at the table (Stripe or local gateway), tips</td><td>Premium plan + faster table turnover</td></tr>
+    <tr><td>Months 3–6</td><td>Automatic receipt-printer printing in the kitchen</td><td>Kitchens that prefer paper tickets</td></tr>
+    <tr><td>Months 6–9</td><td>Takeaway / pickup ordering from the restaurant's Instagram link</td><td>New revenue for clients = higher plan</td></tr>
+    <tr><td>Months 6–9</td><td>Guest feedback &amp; Google review prompt after the meal</td><td>Owners love more 5-star reviews</td></tr>
+    <tr><td>Months 9–12</td><td>Loyalty (stamps/points), happy-hour pricing, multi-location reports</td><td>Pro plan for groups and chains</td></tr>
+  </table>
+  <div class="callout info"><b>Upsell ladder</b>Menu → Standard → Pro → multi-location. Every client who grows should move up a plan.</div>
+</section>
+
+<!-- ============================================================ 22 -->
+<section class="page-break">
+  <div class="sec-head"><div><div class="kicker">Section 22</div><h2>Checklists</h2></div><div class="no">22</div></div>
+  <div class="grid2">
+    <div class="card avoid">
+      <h4 style="margin-top:0">Before selling</h4>
+      <ul class="check">
+        <li>Domain + VPS + HTTPS working</li>
+        <li>Public link set in Settings</li>
+        <li>Demo restaurant with 20+ photographed dishes</li>
+        <li>10 printed demo tent cards</li>
+        <li>WhatsApp Business + professional email</li>
+        <li>Price list in local currency</li>
+        <li>Simple contract + privacy page</li>
+        <li>Lead list of 300 restaurants (Lead Finder)</li>
+      </ul>
+    </div>
+    <div class="card avoid">
+      <h4 style="margin-top:0">Demo bag</h4>
+      <ul class="check">
+        <li>Phone with the demo link bookmarked</li>
+        <li>Tablet showing the kitchen display</li>
+        <li>Printed QR tent cards (demo + theirs)</li>
+        <li>One-page price sheet</li>
+        <li>Business cards</li>
+        <li>Mobile data / hotspot (never rely on their Wi-Fi)</li>
+      </ul>
+    </div>
+    <div class="card avoid">
+      <h4 style="margin-top:0">New client setup</h4>
+      <ul class="check">
+        <li>Restaurant created with plan + paid-until</li>
+        <li>Logo, cover, colour, currency, tax, language, time zone</li>
+        <li>Menu with photos, options, allergens</li>
+        <li>Tables + zones, QR printed and tested</li>
+        <li>Kitchen tablet: full screen, sound on</li>
+        <li>Staff accounts created, team trained</li>
+        <li>First live order placed together</li>
+        <li>Day-2 and day-7 check-in calls booked</li>
+      </ul>
+    </div>
+    <div class="card avoid">
+      <h4 style="margin-top:0">Every week</h4>
+      <ul class="check">
+        <li>200+ contacts (email, WhatsApp, visits)</li>
+        <li>8–12 demos</li>
+        <li>3–5 new videos posted</li>
+        <li>Check platform: inactive clients → call</li>
+        <li>Renewals due this week → invoice</li>
+        <li>Review ad results, pause losers</li>
+        <li>Copy backup off the server</li>
+        <li>Update your numbers (Section 19)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout ok" style="margin-top:8mm"><b>The formula</b>Great demo (their own menu on their phone) + setup done for them + 14 days free + fast support = restaurants that pay every month and tell their friends. Repeat it every day for 90 days.</div>
+  <p class="muted small" style="text-align:center;margin-top:10mm">TableTap · Product &amp; Business Playbook · v1.0</p>
+</section>
+
+</body>
+</html>

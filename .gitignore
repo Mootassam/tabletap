@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+data/
+build/
+dist/
+installer_output/
+.venv/
+
+# unrelated marketing assets & runtime logs
+static/ADS/
+run_err.txt
+run_out.txt

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TableTap</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/css/base.css?v={{ v }}">
+<link rel="stylesheet" href="/static/css/admin.css?v={{ v }}">
+</head>
+<body class="admin">
+<div id="app"><div style="min-height:100vh;display:grid;place-items:center"><div class="spinner"></div></div></div>
+<script id="boot" type="application/json">{{ boot|safe }}</script>
+<script src="/static/js/core.js?v={{ v }}"></script>
+<script src="/static/js/admin.js?v={{ v }}"></script>
+</body>
+</html>
